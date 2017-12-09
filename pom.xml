@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -26,7 +25,7 @@
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-rng-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <name>Apache Commons RNG</name>
 
   <inceptionYear>2016</inceptionYear>
@@ -85,7 +84,6 @@
     <commons.componentid>rng</commons.componentid>
     <!-- This value must reflect the current name of the base package. -->
     <commons.osgi.symbolicName>org.apache.commons.rng</commons.osgi.symbolicName>
-    <commons.module.name>org.apache.commons.rng</commons.module.name>
     <!-- OSGi -->
     <commons.osgi.export>org.apache.commons.rng</commons.osgi.export>
     <!-- do not use snapshot suffix here -->
@@ -134,7 +132,9 @@
         Temporary workaround?
     -->
     <commons.release.name>commons-rng-${project.version}</commons.release.name>
-  </properties>
+  <gib.referenceBranch>HEAD^1</gib.referenceBranch>
+        <gib.enabled>true</gib.enabled>
+    </properties>
 
   <build>
     <plugins>
@@ -206,8 +206,8 @@
         <artifactId>apache-rat-plugin</artifactId>
         <version>${commons.rat.version}</version>
         <configuration>
-        <!--
-          Needed for command-line access, e.g mvn apache-rat:rat and mvn apache-rat:check
+        <!-- 
+          Needed for command-line access, e.g mvn apache-rat:rat and mvn apache-rat:check 
           Below should agree with config in <reporting> section, so the site
           gets consistent output.
         -->
@@ -218,7 +218,9 @@
             <exclude>src/site/resources/txt/userguide/stress/dh/**</exclude>
             <exclude>src/site/resources/txt/userguide/stress/tu/**</exclude>
             <exclude>dist-archive/**</exclude>
-          </excludes>
+          <exclude>**/.travis.yml</exclude>
+                        <exclude>**/NOW</exclude>
+                    </excludes>
         </configuration>
       </plugin>
     </plugins>
@@ -240,7 +242,14 @@
         </plugin>
       </plugins>
     </pluginManagement>
-  </build>
+  <extensions>
+            <extension>
+                <groupId>com.vackosar.gitflowincrementalbuilder</groupId>
+                <artifactId>gitflow-incremental-builder</artifactId>
+                <version>3.4</version>
+            </extension>
+        </extensions>
+    </build>
 
   <reporting>
     <plugins>
@@ -349,7 +358,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <additionalparam>-Xdoclint:all --allow-script-in-comments -header '&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'</additionalparam>
+          <additionalparam>-Xdoclint:all -header '&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'</additionalparam>
           <!-- <aggregate>true</aggregate> -->
         </configuration>
       </plugin>
@@ -564,3 +573,4 @@
   </modules>
 
 </project>
+
